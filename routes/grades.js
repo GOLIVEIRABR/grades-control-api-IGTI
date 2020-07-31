@@ -46,7 +46,7 @@ router.get("/grade/:id", async (req, res, next) => {
 router.put("/", async (req, res, next) => {
   try {
     const data = JSON.parse( await readFile(global.fileName));
-
+    const id = req.body.id;
     const grade = req.body;    
     const index = data.grades.findIndex(current => current.id === parseInt(grade.id))
 
@@ -54,14 +54,12 @@ router.put("/", async (req, res, next) => {
       throw new Error('Registro não encontrado!');
     }
 
-    data.grades[index].student = grade.student;
-    data.grades[index].subject = grade.subject;
-    data.grades[index].type = grade.type;
-    data.grades[index].value = parseInt(grade.value);
+    data.grades[index] = grade;
+    await writeFile(global.fileName, JSON.stringify(data, null, 2));
+    
+    delete grade.id;
 
-    await writeFile(global.fileName, JSON.stringify(data, null, 2))
-
-    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - id: ${grade.id} ℹ️`);
+    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - id: ${id} ℹ️`);
     res.send(grade);
 
   } catch (err) {

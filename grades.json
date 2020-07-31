@@ -34,20 +34,16 @@
       "timestamp": "2020-05-19T18:21:24.975Z"
     },
     {
-      "id": 5,
-      "student": "Loiane Groner",
+      "student": "Roberto Achar",
       "subject": "01 - JavaScript",
-      "type": "Trabalho Prático",
-      "value": 21,
-      "timestamp": "2020-05-19T18:21:24.981Z"
+      "type": "Desafio",
+      "value": 15
     },
     {
-      "id": 6,
-      "student": "Loiane Groner",
-      "subject": "02 - Node",
-      "type": "Trabalho Prático",
-      "value": 24,
-      "timestamp": "2020-05-19T18:21:24.987Z"
+      "student": "Roberto Achar",
+      "subject": "01 - JavaScript",
+      "type": "Desafio",
+      "value": 15
     },
     {
       "id": 7,
@@ -59,11 +55,10 @@
     },
     {
       "id": 8,
-      "student": "Loiane Groner",
-      "subject": "04 - MongoDB",
-      "type": "Trabalho Prático",
-      "value": 30,
-      "timestamp": "2020-05-19T18:21:24.999Z"
+      "student": "Roberto Achar",
+      "subject": "01 - JavaScript",
+      "type": "Desafio",
+      "value": 15
     },
     {
       "id": 9,
