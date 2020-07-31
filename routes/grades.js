@@ -5,7 +5,7 @@ const { readFile, writeFile } = fs;
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
 
@@ -22,25 +22,28 @@ router.post("/", async (req, res) => {
 
     await writeFile(global.fileName, JSON.stringify(data, null, 2));
 
+    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - ${JSON.stringify(grade)} ℹ️`);
     res.send(grade);
 
-  } catch (error) {
-    res.send(error.message);
+  } catch (err) {
+    next(err);
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const data = JSON.parse( await readFile(global.fileName));
     const grade = data.grades.find(current => current.id === parseInt(req.params.id));
-
+    
+    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - id: ${req.params.id} ℹ️`);
     res.send(grade);
-  } catch (error) {
-    res.send(error.message)
-  }
-});
 
-router.put("/", async (req, res) => {
+  } catch (err) {
+    next(err);
+  }
+}).next;
+
+router.put("/", async (req, res, next) => {
   try {
     const data = JSON.parse( await readFile(global.fileName));
 
@@ -58,26 +61,29 @@ router.put("/", async (req, res) => {
 
     await writeFile(global.fileName, JSON.stringify(data, null, 2))
 
+    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - id: ${grade.id} ℹ️`);
     res.send(grade);
 
-  } catch (error) {
-    res.send(error.message);
+  } catch (err) {
+    next(err);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
     data.grades = data.grades.filter(grade => grade.id !== parseInt(req.params.id));
     await writeFile(global.fileName, JSON.stringify(data, null, 2));
+
+    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - id: ${req.params.id} ℹ️`);
     res.end();
 
-  } catch (error) {
-    res.send(error.message);
+  } catch (err) {
+    next(err)
   }
 });
 
-router.get("/student/:student/subject/:subject", async (req, res) => {
+router.get("/student/:student/subject/:subject", async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
     const student = req.params.student;
@@ -90,14 +96,15 @@ router.get("/student/:student/subject/:subject", async (req, res) => {
       return total + grade.value;
     }, 0);
 
+    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - Total: ${total} ℹ️`);
     res.send(''+total+'');
 
-  } catch (error) {
-    res.send(error.message);
+  } catch (err) {
+    next(err)
   }
 });
 
-router.get("/average/:subject/type/:type", async (req, res) => {
+router.get("/average/:subject/type/:type", async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
     const subject = req.params.subject;
@@ -112,13 +119,14 @@ router.get("/average/:subject/type/:type", async (req, res) => {
 
     average = (average/grades.length);
 
+    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - Média: ${average} ℹ️`);
     res.send(''+average+'');
-  } catch (error) {
-    res.send(error.message);
+  } catch (err) {
+    next(err)
   }
 });
 
-router.get("/bests/:subject/type/:type", async (req, res) => {
+router.get("/bests/:subject/type/:type", async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
     const subject = req.params.subject;
@@ -137,11 +145,17 @@ router.get("/bests/:subject/type/:type", async (req, res) => {
 
     grades.splice(3,1)
 
+    global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - ${JSON.stringify(grades)} ℹ️`);
     res.send(grades);
 
-  } catch (error) {
-    res.send(error.message);
+  } catch (err) {
+    next(err)
   }
 });
+
+router.use((err, req, res, next)=>{
+  global.logger.error(`⛔️ ${req.method} ${req.baseUrl} - ${err.message} ⛔️`);
+  res.status(400).send({erro: err.message});
+})
 
 export default router;

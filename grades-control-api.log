@@ -1,0 +1,9 @@
+2020-07-31T06:06:07.742Z [grades-control-api] info: ℹ️ POST /grades - {"id":51,"student":"Roberto Achar","subject":"03 - React","type":"Fórum","value":10,"timestamp":"2020-07-31T06:06:07.742Z"} ℹ️
+2020-07-31T06:06:26.671Z [grades-control-api] info: ℹ️ PUT /grades - id: 3 ℹ️
+2020-07-31T06:06:41.287Z [grades-control-api] info: ℹ️ DELETE /grades - id: 15 ℹ️
+2020-07-31T06:06:53.042Z [grades-control-api] info: ℹ️ GET /grades - id: 43 ℹ️
+2020-07-31T06:07:08.489Z [grades-control-api] info: ℹ️ GET /grades - id: 90 ℹ️
+2020-07-31T06:07:36.334Z [grades-control-api] info: 👏 API Started! 👏
+2020-07-31T06:07:41.804Z [grades-control-api] info: ℹ️ GET /grades - Total: 90 ℹ️
+2020-07-31T06:07:48.839Z [grades-control-api] info: ℹ️ GET /grades - Média: 26 ℹ️
+2020-07-31T06:07:55.823Z [grades-control-api] info: ℹ️ GET /grades - [{"id":31,"student":"Roberto Achar","subject":"03 - React","type":"Trabalho Prático","value":27,"timestamp":"2020-05-19T18:21:25.171Z"},{"id":19,"student":"Roberta Arcoverde","subject":"03 - React","type":"Trabalho Prático","value":7,"timestamp":"2020-05-19T18:21:25.072Z"},{"id":43,"student":"Rodrigo Branas","subject":"03 - React","type":"Trabalho Prático","value":6,"timestamp":"2020-05-19T18:21:25.253Z"}] ℹ️
