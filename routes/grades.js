@@ -30,7 +30,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/grade/:id", async (req, res, next) => {
   try {
     const data = JSON.parse( await readFile(global.fileName));
     const grade = data.grades.find(current => current.id === parseInt(req.params.id));
@@ -41,7 +41,7 @@ router.get("/:id", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}).next;
+});
 
 router.put("/", async (req, res, next) => {
   try {
@@ -83,11 +83,11 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/student/:student/subject/:subject", async (req, res, next) => {
+router.get("/student", async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
-    const student = req.params.student;
-    const subject = req.params.subject;
+    const student = req.query.student;
+    const subject = req.query.subject;
 
     let grades = data.grades.filter(grade => grade.student === student);
     grades = grades.filter(grade => grade.subject === subject);
@@ -104,11 +104,12 @@ router.get("/student/:student/subject/:subject", async (req, res, next) => {
   }
 });
 
-router.get("/average/:subject/type/:type", async (req, res, next) => {
+router.get("/average/", async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
-    const subject = req.params.subject;
-    const type = req.params.type;
+    const subject = req.query.subject;
+    const type = req.query.type;
+  
 
     let grades = data.grades.filter(grade => grade.subject === subject);
     grades = grades.filter(grade => grade.type === type);
@@ -126,11 +127,11 @@ router.get("/average/:subject/type/:type", async (req, res, next) => {
   }
 });
 
-router.get("/bests/:subject/type/:type", async (req, res, next) => {
+router.get("/bests", async (req, res, next) => {
   try {
     const data = JSON.parse(await readFile(global.fileName));
-    const subject = req.params.subject;
-    const type = req.params.type;
+    const subject = req.query.subject;
+    const type = req.query.type;
 
     let grades = data.grades.filter(grade => grade.subject === subject);
     grades = grades.filter(grade => grade.type === type);
