@@ -30,13 +30,16 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("/grade/:id", async (req, res, next) => {
+router.get("/grade/:id?", async (req, res, next) => {
   try {
     const data = JSON.parse( await readFile(global.fileName));
-    const grade = data.grades.find(current => current.id === parseInt(req.params.id));
+    
+    const results = req.params.id ? 
+    data.grades.find(current => current.id === parseInt(req.params.id)) :
+    data;
     
     global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - id: ${req.params.id} ℹ️`);
-    res.json(grade);
+    res.json(results);
 
   } catch (err) {
     next(err);
