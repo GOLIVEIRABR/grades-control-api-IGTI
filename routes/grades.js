@@ -36,7 +36,7 @@ router.get("/:id", async (req, res, next) => {
     const grade = data.grades.find(current => current.id === parseInt(req.params.id));
     
     global.logger.info(`ℹ️ ${req.method} ${req.baseUrl} - id: ${req.params.id} ℹ️`);
-    res.send(grade);
+    res.json(grade);
 
   } catch (err) {
     next(err);
